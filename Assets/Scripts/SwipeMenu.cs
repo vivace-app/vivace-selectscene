@@ -21,6 +21,7 @@ namespace Project.Scripts.SelectScreen
         // private static float[] _musicTime; //楽曲の再生時間を格納
         // [FormerlySerializedAs("DisplayedMusicTime")] public Text displayedMusicTime; //画面に表示される楽曲の再生時間
         public RectTransform background;
+
         // [FormerlySerializedAs("ScrollView")] public RectTransform scrollView;
         // [FormerlySerializedAs("ScrollViewPadding")] public HorizontalLayoutGroup scrollViewPadding;
         public Text yourHighScoreText;
@@ -40,7 +41,7 @@ namespace Project.Scripts.SelectScreen
 
         private const string GetMyScoreApiUri = ""; //EnvDataStore.ApiUri + "/auth/myScore";
         private const string GetOnlineScoreApiUri = ""; //EnvDataStore.ApiUri + "/topScore";
-    
+
         // ------------------------------------------------------------------------------------
 
         [Serializable]
@@ -64,7 +65,6 @@ namespace Project.Scripts.SelectScreen
             _distance = 1f / (_pos.Length - 1f);
             for (var i = 0; i < _pos.Length; i++) _pos[i] = _distance * i;
             BackgroundCover();
-
         }
 
         /// pivot を中心に、target のScaleを変化させる
@@ -74,14 +74,13 @@ namespace Project.Scripts.SelectScreen
             Vector3 diff = targetPos - pivot;
             float relativeScale = newScale.x / target.transform.localScale.x;
 
-            Vector3 resultPos = pivot + diff * relativeScale; 
+            Vector3 resultPos = pivot + diff * relativeScale;
             target.transform.localScale = newScale;
             target.transform.localPosition = resultPos;
         }
-        
+
         public void Update()
         {
-            Debug.Log("ちんぽ！ﾎﾞﾛﾝ");
             if (Input.GetMouseButton(0)) // クリック中は，scroll_posに横スクロールのx座標を格納し続ける．
                 _scrollPos = scrollbar.GetComponent<Scrollbar>().value;
             else // クリックを離したときに，scroll_posの値を参考に，最も近いカードを中央に持ってくる．
@@ -100,12 +99,12 @@ namespace Project.Scripts.SelectScreen
                     Vector2.Lerp(transform.GetChild(i).localScale, new Vector2(1f, 1f), 0.5f);
                 transform.GetChild(i).transform.position = Vector2.Lerp(
                     transform.GetChild(i).transform.position,
-                    new Vector2(transform.GetChild(i).transform.position.x, 
+                    new Vector2(transform.GetChild(i).transform.position.x,
                         560f), 0.5f);
-                
+
 
                 //SelectedMusic(i); //　楽曲再生の実行と停止を行う（1フレーム毎）
-                
+
                 // カードを縮小する
                 for (var cnt = 0; cnt < _pos.Length; cnt++)
                 {
@@ -114,7 +113,7 @@ namespace Project.Scripts.SelectScreen
                         new Vector2(0.7f, 0.7f), 0.5f);
                     transform.GetChild(cnt).transform.position = Vector2.Lerp(
                         transform.GetChild(cnt).transform.position,
-                        new Vector2(transform.GetChild(cnt).transform.position.x, 
+                        new Vector2(transform.GetChild(cnt).transform.position.x,
                             560f + 465f * 0.15f), 0.5f);
                 }
 
